@@ -296,7 +296,7 @@ public class Lab3_JuanGuevaraP2 {
                         }
                         System.out.println("Ingrese posicion del jugador que desea eliminar");
                         int indice = sc.nextInt();
-                        while (indice < 1 || indice >= jugadores.size()) {
+                        while (indice < 0 || indice >= jugadores.size()) {
                             System.out.println("INCORRECTO");
                             System.out.println("Ingrese posicion del jugador que desea eliminar");
                             indice = sc.nextInt();
@@ -322,6 +322,8 @@ public class Lab3_JuanGuevaraP2 {
                         double presupuesto = sc.nextDouble();
 
                         equipos.add(new Equipo(nombre, palmares, presupuesto, ciudad, new ArrayList()));
+                        System.out.println("Desea continuar?[1/2]");
+                        continuar = sc.nextInt();
                     } while (continuar != 2);
                     break;
                 case 5:
@@ -330,7 +332,7 @@ public class Lab3_JuanGuevaraP2 {
                         System.out.println("ELIMINAR EQUIPOS");
                         System.out.println("Ingrese la posicion");
                         int pos = sc.nextInt();
-                        while (pos < 1 || pos >= equipos.size()) {
+                        while (pos < 0 || pos >= equipos.size()) {
                             System.out.println("INCORRECTO");
                             System.out.println("Ingrese posicion del EQUIPO que desea eliminar");
                             pos = sc.nextInt();
@@ -347,7 +349,7 @@ public class Lab3_JuanGuevaraP2 {
                         System.out.println("MODIFICAR EQUIPOS");
                         System.out.println("Ingrese posicion");
                         pos = sc.nextInt();
-                        while (pos < 1 || pos >= equipos.size()) {
+                        while (pos < 0 || pos >= equipos.size()) {
                             System.out.println("INCORRECTO");
                             System.out.println("Ingrese posicion del EQUIPO que desea eliminar");
                             pos = sc.nextInt();
@@ -396,7 +398,7 @@ public class Lab3_JuanGuevaraP2 {
                         System.out.println("HACER COMPRAS");
                         System.out.println("Ingrese el equipo");
                         int equipo = sc.nextInt();
-                        while (equipo < 1 || equipo >= equipos.size()) {
+                        while (equipo < 0 || equipo >= equipos.size()) {
                             System.out.println("INCORRECTO");
                             System.out.println("Ingrese posicion del EQUIPO que desea comprar");
                             equipo = sc.nextInt();
@@ -409,7 +411,7 @@ public class Lab3_JuanGuevaraP2 {
                         }
                         System.out.println("Ingrese la posicion del jugador que desea comprar");
                         int jugador = sc.nextInt();
-                        while (jugador < 1 || jugador >= equipos.size()) {
+                        while (jugador < 0 || jugador >= equipos.size()) {
                             System.out.println("INCORRECTO");
                             System.out.println("Ingrese posicion del jugador que desea comprar");
                             jugador = sc.nextInt();
@@ -438,9 +440,10 @@ public class Lab3_JuanGuevaraP2 {
                                 }
                             }
                             jugadores.get(jugador).setNumero(numero);
+                            jugadores.get(jugador).setEquipo(equipos.get(equipo).getNombre());
                             equipos.get(equipo).getLista().add(jugadores.get(jugador));
                             System.out.println("La compra se ha realizado");
-                        }else{
+                        } else {
                             System.out.println("Fondos insuficientes");
                         }
                         System.out.println("Desea continuar[1 si/2 no]");
@@ -449,14 +452,131 @@ public class Lab3_JuanGuevaraP2 {
                     break;
                 case 8:
                     System.out.println("ORGANIZAR EQUIPOS");
+                    System.out.println("LISTAR EQUIPOS");
+                    for (int i = 0; i < equipos.size(); i++) {
+                        System.out.println(i + ". " + equipos.get(i));
+                    }
+                    System.out.println("Ingrese el numero del equipo: ");
+                    int nequipo = sc.nextInt();
+                    while (nequipo < 0 || nequipo > equipos.size()) {
+                        System.out.println("Incorrecto");
+                        System.out.println("Ingrese de nuevo: ");
+                        nequipo = sc.nextInt();
+                    }
+                    boolean ver = false;
+                    if (equipos.get(nequipo).getLista().size() >= 11) {
+
+                        int cont_df = 0, cont_m = 0, cont_de = 0;
+                        do {
+                            for (int i = 0; i < equipos.get(nequipo).getLista().size(); i++) {
+                                if (equipos.get(nequipo).getLista().get(i) instanceof Delantero) {
+                                    cont_de++;
+                                } else if (equipos.get(nequipo).getLista().get(i) instanceof Medio) {
+                                    cont_m++;
+                                } else if (equipos.get(nequipo).getLista().get(i) instanceof Defensa) {
+                                    cont_de++;
+                                }
+                            }
+                            if (cont_df > 0) {
+                                System.out.println("Ingrese el numero de defensas deseado: ");
+                                int def = sc.nextInt();
+                                if (def > cont_df) {
+                                    System.out.println("NO HAY SUFICIENTES");
+                                    ver = true;
+                                    continue;
+                                }
+                            } else {
+                                System.out.println("No hay defensas");
+                            }
+
+                            if (cont_m > 0) {
+                                System.out.println("Ingrese el numero de medios");
+                                int med = sc.nextInt();
+                                if (med > cont_m) {
+                                    System.out.println("NO HAY SUFICIENTES");
+                                    ver = true;
+                                    continue;
+                                }
+                            } else {
+                                System.out.println("No hay medios");
+                            }
+
+                            if (cont_de > 0) {
+                                System.out.println("Ingrese el numero de delanteros");
+                                int del = sc.nextInt();
+                                if (del > cont_de) {
+                                    System.out.println("NO HAY SUFICIENTES");
+                                    ver = true;
+                                    continue;
+                                }
+                                if (cont_df + cont_de + cont_m != 11) {
+                                    System.out.println("No cumple con el numero de jugadores");
+                                }
+                            } else {
+                                System.out.println("No hay delanteros");
+                            }
+                            for (int i = 0; i < equipos.get(nequipo).getLista().size(); i++) {
+                                if (equipos.get(nequipo).getLista().get(i) instanceof Delantero) {
+                                    System.out.println("Delantero " + equipos.get(nequipo).getLista().get(i));
+                                }
+                                if (equipos.get(nequipo).getLista().get(i) instanceof Defensa) {
+                                    System.out.println("Defensa " + equipos.get(nequipo).getLista().get(i));
+                                }
+                                if (equipos.get(nequipo).getLista().get(i) instanceof Medio) {
+                                    System.out.println("Medio " + equipos.get(nequipo).getLista().get(i));
+                                }
+                            }
+                            for (int i = 0; i < cont_df; i++) {
+                                System.out.println("Ingrese defensa: ");
+                                int p = sc.nextInt();
+                                equipos.get(nequipo).getLista().get(i).setEstado(3);
+                            }
+                            for (int i = 0; i < cont_de; i++) {
+                                System.out.println("Ingrese delantero: ");
+                                int p = sc.nextInt();
+                                equipos.get(nequipo).getLista().get(i).setEstado(3);
+                            }
+                            for (int i = 0; i < cont_m; i++) {
+                                System.out.println("Ingrese Medio: ");
+                                int p = sc.nextInt();
+                                equipos.get(nequipo).getLista().get(i).setEstado(3);
+                            }
+                            ver = false;
+                        } while (ver);
+
+                    } else {
+                        System.out.println("No tiene suficientes jugadores");
+                        break;
+                    }
+
                     break;
                 case 9:
-                    System.out.println("LISTAR EQUIPOS");
+                    System.out.println("Listar jugadores");
+                    System.out.println("Ingrese el numero del equipo que desea listar");
+                    int NE = sc.nextInt();
+                    while (NE < 0 || NE >= equipos.size()) {
+                        System.out.println("Incorrecto");
+                        System.out.println("Ingrese el numero del equipo que desea listar");
+                        NE = sc.nextInt();
+                    }
+                    System.out.println("Titulares");
+                    for (int i = 0; i < equipos.get(NE).getLista().size(); i++) {
+                        if (equipos.get(NE).getLista().get(i).getEstado() == 3) {
+                            System.out.println(equipos.get(NE).getLista().get(i));
+                        }
+                    }
+                    System.out.println("Suplentes");
+                    for (int i = 0; i < equipos.get(NE).getLista().size(); i++) {
+                        if (equipos.get(NE).getLista().get(i).getEstado() != 3) {
+                            System.out.println(equipos.get(NE).getLista().get(i));
+                        }
+                    }
+
                     break;
                 case 10:
                     System.out.println("Listar jugadores");
                     for (int i = 0; i < jugadores.size(); i++) {
-                        System.out.println(i+". "+jugadores.get(i));
+                        System.out.println(i + ". " + jugadores.get(i));
                     }
                     break;
 

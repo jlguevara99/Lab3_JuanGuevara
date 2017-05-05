@@ -41,7 +41,7 @@ public class Portero extends Jugador {
 
     @Override
     public String toString() {
-        return super.toString() + "Portero{" + "aereo=" + aereo + ", pies=" + pies + '}';
+        return super.toString() + "\nPortero{" + "aereo=" + aereo + ", \npies=" + pies + '}';
     }
     
 }
