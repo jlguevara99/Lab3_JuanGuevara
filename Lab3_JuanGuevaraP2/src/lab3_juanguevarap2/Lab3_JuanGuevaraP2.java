@@ -415,13 +415,50 @@ public class Lab3_JuanGuevaraP2 {
                             jugador = sc.nextInt();
                         }
                         if (equipos.get(equipo).getPresupuesto() >= jugadores.get(jugador).getPrecio()) {
-                            System.out.println("La compra se ha realizado");
+
                             double nuevoP = equipos.get(equipo).getPresupuesto() - jugadores.get(jugador).getPrecio();
                             equipos.get(equipo).setPresupuesto(nuevoP);
+                            jugadores.get(jugador).setEstado(2);
+                            System.out.println("Ingrese el nuevo numero");
+                            int numero = sc.nextInt();
+                            boolean coin = false;
+                            for (int i = 0; i < equipos.get(equipo).getLista().size(); i++) {
+                                if (numero == equipos.get(equipo).getLista().get(i).getNumero()) {
+                                    coin = true;
+                                }
+                            }
+                            while (coin == true) {
+                                System.out.println("El numero esta repetido");
+                                System.out.println("Ingreselo de nuevo");
+                                numero = sc.nextInt();
+                                for (int i = 0; i < equipos.get(equipo).getLista().size(); i++) {
+                                    if (numero == equipos.get(equipo).getLista().get(i).getNumero()) {
+                                        coin = true;
+                                    }
+                                }
+                            }
+                            jugadores.get(jugador).setNumero(numero);
+                            equipos.get(equipo).getLista().add(jugadores.get(jugador));
+                            System.out.println("La compra se ha realizado");
+                        }else{
+                            System.out.println("Fondos insuficientes");
                         }
                         System.out.println("Desea continuar[1 si/2 no]");
                         resp = sc.nextInt();
                     } while (resp != 2);
+                    break;
+                case 8:
+                    System.out.println("ORGANIZAR EQUIPOS");
+                    break;
+                case 9:
+                    System.out.println("LISTAR EQUIPOS");
+                    break;
+                case 10:
+                    System.out.println("Listar jugadores");
+                    for (int i = 0; i < jugadores.size(); i++) {
+                        System.out.println(i+". "+jugadores.get(i));
+                    }
+                    break;
 
             }
         } while (opcion != 11);
