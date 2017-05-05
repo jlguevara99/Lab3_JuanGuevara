@@ -5,6 +5,8 @@
  */
 package lab3_juanguevarap2;
 
+import java.util.Scanner;
+
 /**
  *
  * @author HP
@@ -15,7 +17,8 @@ public class Lab3_JuanGuevaraP2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       Scanner sc = new Scanner(System.in);
+       
     }
     
 }
